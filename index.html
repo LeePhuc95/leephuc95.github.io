@@ -77,15 +77,12 @@
     }
     /* chỉ áp dụng khi cần chạy */
     .app-name.scrolling span {
-        animation: scrollText 12s linear infinite;
+        animation: scrollText 10s linear infinite;
     }
     /* tạo khoảng nghỉ 1 giây ở cuối */
     @keyframes scrollText {
-      0% {
+      0%, 15% {
         transform: translateX(0);
-      }
-      90% {
-        transform: translateX(-100%);
       }
       100% {
         transform: translateX(-100%);
