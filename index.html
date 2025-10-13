@@ -72,6 +72,10 @@
     }
     .app-name span {
         display: inline-block;
+        white-space: nowrap;
+    }
+    /* chỉ chạy khi có class .scrolling */
+    .app-name.scrolling span {
         animation: scrollText 10s linear infinite;
     }
     @keyframes scrollText {
@@ -159,6 +163,13 @@
         listEl.innerHTML = `<p>Lỗi khi tải danh sách ứng dụng.</p>`;
         console.error(err);
       }
+
+      document.querySelectorAll('.app-name').forEach(el => {
+        const span = el.querySelector('span');
+        if (span.scrollWidth > el.clientWidth) {
+            el.classList.add('scrolling'); // chỉ chạy khi bị tràn
+        }
+       });
     }
 
     loadApps();
