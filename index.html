@@ -115,7 +115,7 @@
         let html = "";
 
         if (apkFiles.length > 0) {
-          html += `<div class="section-title">Ứng dụng trong thư mục Apps</div>`;
+          html += `<div class="section-title">Kho lưu trữ</div>`;
           html += apkFiles.map(file => `
             <div class="app-item">
               <div class="app-name">${file.name.replace(".apk", "")}</div>
@@ -125,7 +125,7 @@
         }
 
         if (externalApps.length > 0) {
-          html += `<div class="section-title">Liên kết tải từ nguồn khác</div>`;
+          html += `<div class="section-title">Nguồn khác</div>`;
           html += externalApps.map(app => `
             <div class="app-item">
               <div class="app-name">${app.name}</div>
