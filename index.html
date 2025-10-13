@@ -110,6 +110,17 @@
         background: #0056b3;
         transform: scale(1.05);      /* phóng nhẹ khi hover */
     }
+    .app-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+    }
+    .app-desc {
+        font-style: italic;
+        font-size: 13px;
+        color: #666;
+    }
   </style>
 </head>
 <body>
@@ -135,10 +146,17 @@
     {
       name: "ReVanced Manager",
       url: "https://revanced.app/download"
+      desc: "Phiên bản mod hỗ trợ Android TV x86, giao diện Google TV."
     },
     {
       name: "SmartTube ATV",
       url: "https://github.com/yuliskov/SmartTube/releases"
+      desc: "Phiên bản mod hỗ trợ Android TV x86, giao diện Google TV."
+    },
+    {
+      name: "LocalSend",
+      url: "https://localsend.org/download"
+      desc: "Phiên bản mod hỗ trợ Android TV x86, giao diện Google TV."
     }
   ];
 
@@ -176,6 +194,8 @@
         extHtml += externalApps.map(app => `
           <div class="app-item">
             <div class="app-name"><span>${app.name}</span></div>
+            ${app.desc ? `<div class="app-desc">${app.desc}</div>` : ""}
+            </div>
             <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
           </div>
         `).join("");
