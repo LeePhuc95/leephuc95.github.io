@@ -133,12 +133,12 @@
   // 🟩 Danh sách liên kết ngoài (tùy chỉnh)
   const externalApps = [
     {
-      name: "YouTube ReVanced",
-      url: "https://github.com/ReVanced/revanced-manager/releases/latest/download/app-release.apk"
+      name: "ReVanced Manager",
+      url: "https://revanced.app/download"
     },
     {
-      name: "Google TV Launcher (Mod)",
-      url: "https://example.com/google-tv-launcher-mod.apk"
+      name: "SmartTube ATV",
+      url: "https://github.com/yuliskov/SmartTube/releases"
     }
   ];
 
@@ -158,7 +158,7 @@
 
       // 🟦 Hiển thị danh sách app từ thư mục /apps/
       if (apkFiles.length > 0) {
-        let html = `<div class="section-title">Ứng dụng trong thư mục Apps</div>`;
+        let html = `<div class="section-title">Kho lưu trữ</div>`;
         html += apkFiles.map(file => `
           <div class="app-item">
             <div class="app-name"><span>${file.name.replace(".apk", "")}</span></div>
@@ -167,12 +167,12 @@
         `).join("");
         appListEl.innerHTML = html;
       } else {
-        appListEl.innerHTML = `<p>Không tìm thấy ứng dụng nào trong thư mục Apps.</p>`;
+        appListEl.innerHTML = `<p>Không tìm thấy ứng dụng nào trong Kho lưu trữ.</p>`;
       }
 
       // 🟨 Hiển thị liên kết ngoài ở khung riêng
       if (externalApps.length > 0) {
-        let extHtml = `<div class="section-title">Liên kết tải từ nguồn khác</div>`;
+        let extHtml = `<div class="section-title">Nguồn khác</div>`;
         extHtml += externalApps.map(app => `
           <div class="app-item">
             <div class="app-name"><span>${app.name}</span></div>
