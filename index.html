@@ -190,15 +190,21 @@
 
       // 🟨 Hiển thị liên kết ngoài ở khung riêng
       if (externalApps.length > 0) {
-        let extHtml = `<div class="section-title">Nguồn khác</div>`;
-        extHtml += externalApps.map(app => `
-          <div class="app-item">
-            <div class="app-name"><span>${app.name}</span></div>
-            ${app.desc ? `<div class="app-desc">${app.desc}</div>` : ""}
+        let extHtml = `<div class="section-title">Liên kết tải từ nguồn khác</div>`;
+        extHtml += externalApps.map(app => {
+          const descHtml = app.desc 
+            ? `<div class="app-desc">${app.desc}</div>` 
+            : "";
+          return `
+            <div class="app-item">
+              <div class="app-info">
+                <div class="app-name"><span>${app.name}</span></div>
+                ${descHtml}
+              </div>
+              <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
             </div>
-            <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
-          </div>
-        `).join("");
+          `;
+        }).join("");
         extListEl.innerHTML = extHtml;
       } else {
         document.getElementById("external-section").style.display = "none";
