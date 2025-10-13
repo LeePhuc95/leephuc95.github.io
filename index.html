@@ -73,17 +73,23 @@
     .app-name span {
         display: inline-block;
         white-space: nowrap;
+        transform: translateX(0);
     }
-    /* chỉ chạy khi có class .scrolling */
+    /* chỉ áp dụng khi cần chạy */
     .app-name.scrolling span {
-        animation-play-state: paused;
+        animation: scrollText 12s linear infinite;
     }
-    .app-name.scrolling:hover span {
-        animation-play-state: running;
-    }
+    /* tạo khoảng nghỉ 1 giây ở cuối */
     @keyframes scrollText {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-100%); }
+      0% {
+        transform: translateX(0);
+      }
+      90% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
     }
     .download-btn {
         flex-shrink: 0;              /* giữ kích thước cố định, không bị ép nhỏ */
