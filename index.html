@@ -131,85 +131,80 @@
   </div>
 
   <script>
-    const username = "leephuc95"; // Tên tài khoản GitHub của bạn
-    const repo = "leephuc95.github.io"; // Tên repository
-    const path = "apps"; // Thư mục chứa .apk
+  const username = "leephuc95"; // Tên GitHub của bạn
+  const repo = "leephuc95.github.io"; // Tên repository
+  const path = "apps"; // Thư mục chứa .apk
 
-    // 🟩 Các link ngoài bạn muốn chèn thủ công
-    const externalApps = [
-      {
-        name: "ReVanced Manager",
-        url: "https://revanced.app/download"
-      },
-      {
-        name: "SmartTube ATV",
-        url: "https://github.com/yuliskov/SmartTube/releases"
-      }
-    ];
+  // 🟩 Danh sách liên kết ngoài (tùy chỉnh)
+  const externalApps = [
+    {
+      name: "YouTube ReVanced",
+      url: "https://github.com/ReVanced/revanced-manager/releases/latest/download/app-release.apk"
+    },
+    {
+      name: "Google TV Launcher (Mod)",
+      url: "https://example.com/google-tv-launcher-mod.apk"
+    }
+  ];
 
-    async function loadApps() {
-      const listEl = document.getElementById("app-list");
-      try {
-        const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`);
-        if (!response.ok) throw new Error("Không thể tải danh sách ứng dụng");
-        const files = await response.json();
+  async function loadApps() {
+    const appListEl = document.getElementById("app-list");
+    const extListEl = document.getElementById("external-list");
+    appListEl.innerHTML = "Đang tải danh sách ứng dụng...";
 
-        const apkFiles = files.filter(f => f.name.endsWith(".apk"));
-        let html = "";
+    try {
+      // 🔹 Lấy danh sách file trong /apps/ bằng GitHub API
+      const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${path}`);
+      if (!response.ok) throw new Error("Không thể tải danh sách ứng dụng");
+      const files = await response.json();
 
-        if (apkFiles.length > 0) {
-          html += `<div class="section-title">Kho lưu trữ</div>`;
-          html += apkFiles.map(file => `
-            <div class="app-item">
-              <div class="app-name"><span>${file.name.replace(".apk", "")}</span></div>
-              <a class="download-btn" href="${file.download_url}" download>Tải xuống</a>
-            </div>
-          `).join("");
-        }
+      // 🔹 Lọc file .apk
+      const apkFiles = files.filter(f => f.name.endsWith(".apk"));
 
-        if (externalApps.length > 0) {
-          html += `<div class="section-title">Nguồn khác</div>`;
-          html += externalApps.map(app => `
-            <div class="app-item">
-              <div class="app-name"><span>${app.name}</span></div>
-              <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
-            </div>
-          `).join("");
-        }
-
-        document.getElementById("app-list").innerHTML = html.includes("Ứng dụng") 
-        ? html 
-        : "<p>Không tìm thấy ứng dụng nào.</p>";
-
-        // 🟨 render phần liên kết ngoài ra khung riêng
-        if (externalApps.length > 0) {
-          const extList = document.getElementById("external-list");
-          let extHtml = `<div class="section-title">Liên kết tải từ nguồn khác</div>`;
-          extHtml += externalApps.map(app => `
-            <div class="app-item">
-              <div class="app-name"><span>${app.name}</span></div>
-              <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
-            </div>
-          `).join("");
-          extList.innerHTML = extHtml;
-        } else {
-          document.getElementById("external-section").style.display = "none";
-        }
-
-      } catch (err) {
-        listEl.innerHTML = `<p>Lỗi khi tải danh sách ứng dụng.</p>`;
-        console.error(err);
+      // 🟦 Hiển thị danh sách app từ thư mục /apps/
+      if (apkFiles.length > 0) {
+        let html = `<div class="section-title">Ứng dụng trong thư mục Apps</div>`;
+        html += apkFiles.map(file => `
+          <div class="app-item">
+            <div class="app-name"><span>${file.name.replace(".apk", "")}</span></div>
+            <a class="download-btn" href="${file.download_url}" download>Tải xuống</a>
+          </div>
+        `).join("");
+        appListEl.innerHTML = html;
+      } else {
+        appListEl.innerHTML = `<p>Không tìm thấy ứng dụng nào trong thư mục Apps.</p>`;
       }
 
+      // 🟨 Hiển thị liên kết ngoài ở khung riêng
+      if (externalApps.length > 0) {
+        let extHtml = `<div class="section-title">Liên kết tải từ nguồn khác</div>`;
+        extHtml += externalApps.map(app => `
+          <div class="app-item">
+            <div class="app-name"><span>${app.name}</span></div>
+            <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
+          </div>
+        `).join("");
+        extListEl.innerHTML = extHtml;
+      } else {
+        document.getElementById("external-section").style.display = "none";
+      }
+
+      // 🧠 Tự động thêm hiệu ứng chạy chữ nếu tràn
       document.querySelectorAll('.app-name').forEach(el => {
         const span = el.querySelector('span');
         if (span.scrollWidth > el.clientWidth) {
-            el.classList.add('scrolling'); // chỉ chạy khi bị tràn
+          el.classList.add('scrolling');
         }
-       });
-    }
+      });
 
-    loadApps();
-  </script>
+    } catch (err) {
+      appListEl.innerHTML = `<p>Lỗi khi tải danh sách ứng dụng.</p>`;
+      console.error(err);
+    }
+  }
+
+  loadApps();
+</script>
+
 </body>
 </html>
