@@ -76,7 +76,10 @@
     }
     /* chỉ chạy khi có class .scrolling */
     .app-name.scrolling span {
-        animation: scrollText 10s linear infinite;
+        animation-play-state: paused;
+    }
+    .app-name.scrolling:hover span {
+        animation-play-state: running;
     }
     @keyframes scrollText {
         0% { transform: translateX(0); }
