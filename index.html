@@ -43,8 +43,17 @@
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         padding: 20px;
     }
+    .card {
+        max-width: 800px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        padding: 20px;
+    }
     .section-title {
-        margin-top: 30px;
+        margin-top: 0;
+        margin-bottom: 15px;
         font-size: 20px;
         color: #222;
         border-bottom: 2px solid #007bff;
@@ -114,7 +123,12 @@
     Blog của chúng tôi: 
     <a href="https://mrdteam.blogspot.com" target="_blank">Mod ROM & Desktop</a>
   </p>
-  <div id="app-list">Đang tải danh sách ứng dụng...</div>
+  <div id="apps-section" class="card">
+    <div id="app-list">Đang tải danh sách ứng dụng...</div>
+  </div>
+  <div id="external-section" class="card">
+      <div id="external-list"></div>
+  </div>
 
   <script>
     const username = "leephuc95"; // Tên tài khoản GitHub của bạn
@@ -163,7 +177,24 @@
           `).join("");
         }
 
-        listEl.innerHTML = html || "<p>Không tìm thấy ứng dụng nào.</p>";
+        document.getElementById("app-list").innerHTML = html.includes("Ứng dụng") 
+        ? html 
+        : "<p>Không tìm thấy ứng dụng nào.</p>";
+
+        // 🟨 render phần liên kết ngoài ra khung riêng
+        if (externalApps.length > 0) {
+          const extList = document.getElementById("external-list");
+          let extHtml = `<div class="section-title">Liên kết tải từ nguồn khác</div>`;
+          extHtml += externalApps.map(app => `
+            <div class="app-item">
+              <div class="app-name"><span>${app.name}</span></div>
+              <a class="download-btn" href="${app.url}" target="_blank">Tải về</a>
+            </div>
+          `).join("");
+          extList.innerHTML = extHtml;
+        } else {
+          document.getElementById("external-section").style.display = "none";
+        }
 
       } catch (err) {
         listEl.innerHTML = `<p>Lỗi khi tải danh sách ứng dụng.</p>`;
