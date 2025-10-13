@@ -79,21 +79,22 @@
         100% { transform: translateX(-100%); }
     }
     .download-btn {
-        flex-shrink: 0; /* không co lại */
+        flex-shrink: 0;              /* giữ kích thước cố định, không bị ép nhỏ */
         background: #007bff;
         color: white;
         border: none;
-        padding: 8px 16px;
+        padding: 8px 14px;           /* vừa vặn chữ */
         border-radius: 6px;
         cursor: pointer;
         text-decoration: none;
         font-size: 14px;
-        min-width: 110px; /* cố định chiều rộng tối thiểu */
         text-align: center;
-        transition: background 0.2s ease;
+        white-space: nowrap;         /* không xuống dòng */
+        transition: background 0.2s ease, transform 0.1s ease-in-out;
     }
     .download-btn:hover {
         background: #0056b3;
+        transform: scale(1.05);      /* phóng nhẹ khi hover */
     }
   </style>
 </head>
